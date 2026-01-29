@@ -13,6 +13,11 @@ import com.sk.skala.stockapi.service.PlayerService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Player 관련 API 요청을 처리하는 REST 컨트롤러
+ * 플레이어 생성, 조회, 로그인, 수정, 삭제 및 주식 거래 기능을 제공한다.
+ */
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/players")
@@ -36,19 +41,19 @@ public class PlayerController {
         return playerService.getPlayerById(playerId);
     }
 
-    // 플레이어 생성
+    // 플레이어 생성 API
     @PostMapping
     public Response createPlayer(@Valid @RequestBody PlayerSession playerSession) {
         return playerService.createPlayer(playerSession);
     }
 
-    // 플레이어 로그인
+    // 플레이어 로그인 API
     @PostMapping("/login")
     public Response loginPlayer(@Valid @RequestBody PlayerSession playerSession) {
         return playerService.loginPlayer(playerSession);
     }
 
-    // 플레이어 정보 수정
+    // 플레이어 정보 수정 (보유 금액)
     @PutMapping
     public Response updatePlayer(@RequestBody Player player) {
         return playerService.updatePlayer(player);
@@ -60,13 +65,13 @@ public class PlayerController {
         return playerService.deletePlayer(player);
     }
 
-    // 주식 매수
+    // 주식 매수 API
     @PostMapping("/buy")
     public Response buyPlayerStock(@Valid @RequestBody StockOrder order) {
         return playerService.buyPlayerStock(order);
     }
 
-    // 주식 매도
+    // 주식 매도 API
     @PostMapping("/sell")
     public Response sellPlayerStock(@Valid @RequestBody StockOrder order) {
         return playerService.sellPlayerStock(order);

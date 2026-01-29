@@ -16,6 +16,11 @@ import com.sk.skala.stockapi.service.StockService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Stock(주식) 관련 API 요청을 처리하는 REST 컨트롤러
+ * 주식 조회, 등록, 수정, 삭제 기능을 제공한다.
+ */
+
 @RestController
 @RequestMapping("/api/stocks")
 @RequiredArgsConstructor

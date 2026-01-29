@@ -26,15 +26,20 @@ import com.sk.skala.stockapi.service.SessionHandler;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Player 관련 비즈니스 로직을 처리하는 서비스 클래스
+ * 플레이어 생성, 조회, 로그인 및 주식 매수/매도 기능을 담당한다.
+ */
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PlayerService {
 
-    private final StockRepository stockRepository;
-    private final PlayerRepository playerRepository;
-    private final PlayerStockRepository playerStockRepository;
-    private final SessionHandler sessionHandler;
+    private final StockRepository stockRepository;  // 주식 조회용 Repository
+    private final PlayerRepository playerRepository;  // 플레이어 정보 관리 Repository
+    private final PlayerStockRepository playerStockRepository;  // 플레이어-주식 관계 관리 Repository
+    private final SessionHandler sessionHandler;  // 로그인 세션 처리 컴포넌트
 
     // =========================
     // 전체 플레이어 목록 조회
@@ -105,7 +110,7 @@ public class PlayerService {
 
         Player player = new Player(
                 playerSession.getPlayerId(),
-                0.0   // 초기 자산
+                50000.0   // 초기 자산
         );
         player.setPlayerPassword(playerSession.getPlayerPassword());
 
