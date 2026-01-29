@@ -20,7 +20,7 @@ spring:
       add-mappings: false
 
   datasource:
-    url: jdbc:h2:file:skala-stock
+    url: jdbc:h2:file:./skala-stock
     driver-class-name: org.h2.Driver
     username: sa
     password:

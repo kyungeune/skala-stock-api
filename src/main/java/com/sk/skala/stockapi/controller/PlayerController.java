@@ -1,14 +1,9 @@
 package com.sk.skala.stockapi.controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import com.sk.skala.stockapi.data.dto.PlayerSession;
 import com.sk.skala.stockapi.data.dto.Response;
@@ -21,13 +16,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/players")
+@Validated
 public class PlayerController {
 
     private final PlayerService playerService;
 
-    // =========================
     // 전체 플레이어 목록 조회
-    // =========================
     @GetMapping("/list")
     public Response getAllPlayers(
             @RequestParam(value = "offset", defaultValue = "0") int offset,
@@ -36,59 +30,45 @@ public class PlayerController {
         return playerService.getAllPlayers(offset, count);
     }
 
-    // =========================
     // 단일 플레이어 상세 조회 + 보유 주식 목록
-    // =========================
     @GetMapping("/{playerId}")
     public Response getPlayerById(@PathVariable String playerId) {
         return playerService.getPlayerById(playerId);
     }
 
-    // =========================
     // 플레이어 생성
-    // =========================
     @PostMapping
-    public Response createPlayer(@RequestBody PlayerSession playerSession) {
+    public Response createPlayer(@Valid @RequestBody PlayerSession playerSession) {
         return playerService.createPlayer(playerSession);
     }
 
-    // =========================
     // 플레이어 로그인
-    // =========================
     @PostMapping("/login")
-    public Response loginPlayer(@RequestBody PlayerSession playerSession) {
+    public Response loginPlayer(@Valid @RequestBody PlayerSession playerSession) {
         return playerService.loginPlayer(playerSession);
     }
 
-    // =========================
     // 플레이어 정보 수정
-    // =========================
     @PutMapping
     public Response updatePlayer(@RequestBody Player player) {
         return playerService.updatePlayer(player);
     }
 
-    // =========================
     // 플레이어 삭제
-    // =========================
     @DeleteMapping
     public Response deletePlayer(@RequestBody Player player) {
         return playerService.deletePlayer(player);
     }
 
-    // =========================
     // 주식 매수
-    // =========================
     @PostMapping("/buy")
-    public Response buyPlayerStock(@RequestBody StockOrder order) {
+    public Response buyPlayerStock(@Valid @RequestBody StockOrder order) {
         return playerService.buyPlayerStock(order);
     }
 
-    // =========================
     // 주식 매도
-    // =========================
     @PostMapping("/sell")
-    public Response sellPlayerStock(@RequestBody StockOrder order) {
+    public Response sellPlayerStock(@Valid @RequestBody StockOrder order) {
         return playerService.sellPlayerStock(order);
     }
 }

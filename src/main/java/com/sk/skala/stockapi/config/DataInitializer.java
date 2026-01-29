@@ -12,16 +12,22 @@ import com.sk.skala.stockapi.repository.StockRepository;
 @Configuration
 public class DataInitializer {
 
-	@Bean
-	CommandLineRunner initStocks(StockRepository stockRepository, PlayerRepository playerRepository) {
-		return args -> {
-			stockRepository.save(new Stock("TechCorp", 100.00));
-			stockRepository.save(new Stock("GreenEnergy", 80.00));
-			stockRepository.save(new Stock("HealthPlus", 120.00));
-			stockRepository.save(new Stock("SkalaEdu", 150.00));
+    @Bean
+    CommandLineRunner initStocks(StockRepository stockRepository, PlayerRepository playerRepository) {
+        return args -> {
 
-			playerRepository.save(new Player("Skala.Man", 10000.0));
-			playerRepository.save(new Player("Smart.Woman", 10000.0));
-		};
-	}
+            // ✅ 이미 데이터가 있으면 더미 데이터 삽입 스킵
+            if (stockRepository.count() == 0) {
+                stockRepository.save(new Stock("TechCorp", 100.00));
+                stockRepository.save(new Stock("GreenEnergy", 80.00));
+                stockRepository.save(new Stock("HealthPlus", 120.00));
+                stockRepository.save(new Stock("SkalaEdu", 150.00));
+            }
+
+            if (playerRepository.count() == 0) {
+                playerRepository.save(new Player("Skala.Man", 10000.0));
+                playerRepository.save(new Player("Smart.Woman", 10000.0));
+            }
+        };
+    }
 }
